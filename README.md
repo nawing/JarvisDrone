@@ -1,28 +1,35 @@
+# JarvisDrone
+
+
+``
+	This is an UI controller with voice command to fly Parrot AR Drone
+	created by Naw Ing
+``
+
+### Tech
+
+``
+	Node
+	Express
+	Mongo DB
+	Angular 2
+``
+
+### Libraries
+
+``
+	DRONE		- FELIXGE's AR DRONE
+	UI 			- FLAT UI KIT by Creative Tim
+	SERVER 	- MVC Generator
+``
+
 ### HOW TO SET UP
 
-	Install Mongo DB first
-
-	Refer
-	https://docs.mongodb.com/manual/installation/
-
-
-#1. Start mongodb
-
-#2. Start server
-
- 	command - node app.js
-
-	(the server should connect the DB collection automatically, we have not put password there yet)
-
-#3. Register as doctor
-
-#4. Log in with phone number
-
-#5. Scan a patient's QR to access medical data entry form
-
-	(you can register as patient to and get a QR code)
-
-	(git checkout develop)
-
-	Latest updates are on git
-# JarvisDrone
+``
+	1. PLEASE INSTALL MONGO DB FIRST
+	2. MAKE SURE MONGO SERVER IS RUNNING
+	3. $ sudo service mongod start (LINUX)
+	4. $ npm install
+	5. $ npm start
+	6. SEE localhost:8042
+``
