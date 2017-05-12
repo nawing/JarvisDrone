@@ -1,7 +1,7 @@
 0 info it worked if it ends with ok
 1 verbose cli [ '/usr/bin/nodejs', '/usr/bin/npm', 'start' ]
 2 info using npm@3.10.10
-3 info using node@v6.10.2
+3 info using node@v6.10.3
 4 verbose run-script [ 'prestart', 'start', 'poststart' ]
 5 info lifecycle projectDrone@0.0.1~prestart: projectDrone@0.0.1
 6 silly lifecycle projectDrone@0.0.1~prestart: no script for prestart, continuing
@@ -26,7 +26,7 @@
 16 verbose cwd /home/nawingngan/myProjects/projectDrone
 17 error Linux 4.4.0-66-generic
 18 error argv "/usr/bin/nodejs" "/usr/bin/npm" "start"
-19 error node v6.10.2
+19 error node v6.10.3
 20 error npm  v3.10.10
 21 error code ELIFECYCLE
 22 error projectDrone@0.0.1 start: `node app.js`
