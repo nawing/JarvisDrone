@@ -1,9 +1,11 @@
 module.exports = {
 
+  TOKENFAIL         : { status : "fail",    message : "You Are Not Authorized To Touch This, Alarming My God, Naw Ing Now"},
+
   USERSHOWSUCCESS   : { status : "success", message : "Hello" },
   USERSHOWFAIL      : { status : "fail",    message : "Cannot Show Your Profile Sir" },
 
-  USERCREATESUCCESS : { status : "success", message : "Sign Up Successful, Welcome Sir" },
+  USERCREATESUCCESS : { status : "success", message : "Sign Up Successful, You Are My Master Now. Please Log In To Continue. Sir" },
   USERCREATEFAIL    : { status : "fail",    message : "Cannot Sign Up" },
 
   USEREDITSUCCESS   : { status : "success", message : "Your Profile Has Been Changed. Congratulations Sir" },

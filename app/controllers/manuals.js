@@ -1,15 +1,9 @@
 var arDrone   = require('./../index');
 var Response  = require('./../response/index');
 var client    = arDrone.createClient();
-// var pngStream = client.getPngStream();
-// var lastPng;
-// pngStream
-//   .on('error', console.log)
-//   .on('data', function(pngBuffer) {
-//     lastPng = pngBuffer;
-//   });
 
-exports.takeoff = function(req, res)
+
+exports.takeOff = function(req, res)
 {
   try {
     client.after(100, function() {
@@ -79,7 +73,7 @@ exports.forward = function (req, res)
     client.after(1, function() {
         this.front(0.7);
       })
-      .after(1000, function() {
+      .after(10, function() {
         this.stop();
       });
     res.json(Response.FORWARDSUCCESS);
@@ -96,7 +90,7 @@ exports.backward = function (req, res)
     client.after(1, function() {
         this.front(0.7);
       })
-      .after(1000, function() {
+      .after(10, function() {
         this.back();
       });
     res.json(Response.BACKWARDSUCCESS);
@@ -113,7 +107,7 @@ exports.flyUp = function (req, res)
     client.after(1, function() {
         this.up(0.7);
       })
-      .after(1000, function() {
+      .after(10, function() {
         this.back();
       });
     res.json(Response.FLYUPSUCCESS);
@@ -130,7 +124,7 @@ exports.flyDown = function (req, res)
     client.after(1, function() {
         this.down(0.7);
       })
-      .after(1000, function() {
+      .after(10, function() {
         this.back();
       });
     res.json(Response.FLYDOWNSUCCESS);

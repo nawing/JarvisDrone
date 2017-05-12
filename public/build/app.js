@@ -59,17 +59,17 @@ webpackJsonp([0],[
 	var angular2_jwt_1 = __webpack_require__(58);
 	var auth_guard_1 = __webpack_require__(61);
 	var home_1 = __webpack_require__(62);
-	var login_1 = __webpack_require__(69);
-	var signup_1 = __webpack_require__(72);
-	var profile_1 = __webpack_require__(75);
-	var gesture_1 = __webpack_require__(78);
-	var keyboard_1 = __webpack_require__(81);
-	var voice_1 = __webpack_require__(84);
-	var nav_1 = __webpack_require__(87);
-	var header_1 = __webpack_require__(90);
-	var footer_1 = __webpack_require__(93);
-	var app_1 = __webpack_require__(96);
-	var app_routes_1 = __webpack_require__(98);
+	var login_1 = __webpack_require__(70);
+	var signup_1 = __webpack_require__(73);
+	var profile_1 = __webpack_require__(76);
+	var gesture_1 = __webpack_require__(79);
+	var keyboard_1 = __webpack_require__(82);
+	var voice_1 = __webpack_require__(85);
+	var nav_1 = __webpack_require__(88);
+	var header_1 = __webpack_require__(91);
+	var footer_1 = __webpack_require__(94);
+	var app_1 = __webpack_require__(97);
+	var app_routes_1 = __webpack_require__(99);
 	var AppModule = (function () {
 	    function AppModule() {
 	    }
@@ -4864,9 +4864,11 @@ webpackJsonp([0],[
 	        if (localStorage.getItem('token') === undefined ||
 	            localStorage.getItem('token') === '' ||
 	            localStorage.getItem('token') === null) {
+	            return false;
+	        }
+	        else {
 	            return true;
 	        }
-	        return true;
 	    };
 	    AuthGuard = __decorate([
 	        core_1.Injectable(), 
@@ -4906,7 +4908,7 @@ webpackJsonp([0],[
 	var http_1 = __webpack_require__(55);
 	var router_1 = __webpack_require__(25);
 	var interceptor_1 = __webpack_require__(64);
-	var template = __webpack_require__(68);
+	var template = __webpack_require__(69);
 	var Home = (function () {
 	    function Home(router, http, httpInterceptor) {
 	        this.router = router;
@@ -4999,18 +5001,14 @@ webpackJsonp([0],[
 	        finalUrl = this.baseUrl + '' + url;
 	        return this.http.post(finalUrl, parsedBody, { headers: headers_1.contentHeaders })
 	            .map(function (response) {
-	            console.log(response);
-	            if (response.status === 200) {
+	            if (response.json().status === 'success') {
 	                console.log(response.json());
 	                _this.notify('success', response.json().message);
 	                return response.json();
 	            }
 	            else {
-	                _this.handleError(response.json().responseMessage);
+	                _this.handleError(response.json().message);
 	            }
-	        })
-	            .catch(function (error) {
-	            _this.handleError('Net Work Error');
 	        });
 	    };
 	    HttpInterceptor.prototype.handleError = function (error) {
@@ -5024,6 +5022,8 @@ webpackJsonp([0],[
 	            type: type,
 	            timer: 3000
 	        });
+	        var textToSpeechJs = __webpack_require__(68);
+	        textToSpeechJs.talk(message);
 	    };
 	    HttpInterceptor = __decorate([
 	        core_1.Injectable(), 
@@ -5051,21 +5051,86 @@ webpackJsonp([0],[
 /* 68 */
 /***/ (function(module, exports) {
 
-	module.exports = "<div class=\"main-panel\">\n\n  <nav-common> </nav-common>\n\n  <div class=\"content\">\n    <div class=\"container-fluid\">\n      <div class=\"row\">\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-warning text-center\"> <i class=\"ti-rocket\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Take Off </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('takeOff')\" class=\"btn btn-danger\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-success text-center\"> <i class=\"ti-magnet\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Land </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('land')\" class=\"btn btn-primary\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-danger text-center\"> <i class=\"ti-angle-double-right\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Rotate Right </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('right')\" class=\"btn btn-info\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-primary text-center\"> <i class=\"ti-angle-double-left\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Rotate Left </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('left')\" class=\"btn btn-success\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-info text-center\"> <i class=\"ti-angle-double-up\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Move Forward </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('forward')\" class=\"btn btn-default\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-danger text-center\"> <i class=\"ti-angle-double-down\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Move Backward </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('backward')\" class=\"btn btn-info\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-warning text-center\"> <i class=\"ti-angle-up\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Fly Up </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('flyDown')\" class=\"btn btn-success\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-success text-center\"> <i class=\"ti-angle-down\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Fly Down </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('flyDown')\" class=\"btn btn-info\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-default text-center\"> <i class=\"ti-wheelchair\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Hold Position </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('hold')\" class=\"btn btn-warning\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n\n      </div>\n    </div>\n  </div>\n  <footer-common> </footer-common>\n</div>\n"
+	"use strict";
+	
+	(function (window) {
+	    var TextToSpeech = {
+	        _key: "addf7ce48a11e371d6fa2a7b6075b9937ab=a6e2f7e1be80d86db2f56bd67953b0bb",
+	        _lang: "en",
+	        _voiceId: "en_gb_amy"
+	
+	        /**
+	         * talk
+	         * Convert the provided text into speech.
+	         *
+	         * @name talk
+	         * @function
+	         * @param {Object} options An object containing:
+	         *
+	         *   - text: a string that must be converted in speech
+	         *   - notNow (default: false): don't play it now
+	         *
+	         * @param {Boolean} notNow Autoplay or not.
+	         * @return {Audio} The `Audio` instance.
+	         */
+	        , talk: function talk(options, notNow) {
+	
+	            if (!options) {
+	                throw new Error("Please provide options.");
+	            }
+	
+	            // handle string values
+	            if (typeof options === "string") {
+	                options = {
+	                    text: options
+	                };
+	            }
+	
+	            // encode text
+	            options.text = btoa(options.text);
+	
+	            // convert to boolean
+	            notNow = Boolean(notNow);
+	
+	            // set the tts url
+	            var voiceId = btoa(options.voiceId || TextToSpeech._voiceId),
+	                language = options.lang || TextToSpeech._lang,
+	                key = options.key || TextToSpeech._key,
+	                ttsUrl = "http://www.ivona.com/voicetest.php?rtr=1&t2r=" + options.text + "&v2r=" + voiceId + "&lang=" + language + "&" + key,
+	                thisSpeech = new Audio(ttsUrl);
+	
+	            // if not now is false, play it
+	            if (!notNow) {
+	                thisSpeech.play();
+	            }
+	
+	            // return audio object to the user
+	            return thisSpeech;
+	        }
+	    };
+	
+	    window.TextToSpeech = TextToSpeech;
+	})(window);
 
 /***/ }),
 /* 69 */
+/***/ (function(module, exports) {
+
+	module.exports = "<div class=\"main-panel\">\n\n  <nav-common> </nav-common>\n\n  <div class=\"content\">\n    <div class=\"container-fluid\">\n      <div class=\"row\">\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-warning text-center\"> <i class=\"ti-rocket\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Take Off </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('takeOff')\" class=\"btn btn-danger\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-success text-center\"> <i class=\"ti-magnet\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Land </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('land')\" class=\"btn btn-primary\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-danger text-center\"> <i class=\"ti-angle-double-right\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Rotate Right </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('right')\" class=\"btn btn-info\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-primary text-center\"> <i class=\"ti-angle-double-left\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Rotate Left </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('left')\" class=\"btn btn-success\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-info text-center\"> <i class=\"ti-angle-double-up\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Move Forward </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('forward')\" class=\"btn btn-default\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-danger text-center\"> <i class=\"ti-angle-double-down\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Move Backward </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('backward')\" class=\"btn btn-info\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-warning text-center\"> <i class=\"ti-angle-up\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Fly Up </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('flyUp')\" class=\"btn btn-success\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-success text-center\"> <i class=\"ti-angle-down\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Fly Down </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('flyDown')\" class=\"btn btn-info\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-default text-center\"> <i class=\"ti-wheelchair\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Hold Position </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('hold')\" class=\"btn btn-warning\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n\n      </div>\n    </div>\n  </div>\n  <footer-common> </footer-common>\n</div>\n"
+
+/***/ }),
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(70));
+	__export(__webpack_require__(71));
 
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5081,22 +5146,39 @@ webpackJsonp([0],[
 	var core_1 = __webpack_require__(4);
 	var router_1 = __webpack_require__(25);
 	var http_1 = __webpack_require__(55);
-	var template = __webpack_require__(71);
+	var interceptor_1 = __webpack_require__(64);
+	var template = __webpack_require__(72);
 	var Login = (function () {
-	    function Login(router, http) {
+	    function Login(router, http, httpInterceptor) {
 	        this.router = router;
 	        this.http = http;
+	        this.httpInterceptor = httpInterceptor;
 	        this.user = {};
 	    }
 	    Login.prototype.login = function () {
-	        console.log(this.user);
+	        var _this = this;
+	        var body = this.user;
+	        var Api = {
+	            url: 'login',
+	            body: body
+	        };
+	        this.httpInterceptor.callApiPost(Api.url, Api.body)
+	            .subscribe(function (res) {
+	            if (res['status'] === 'success') {
+	                localStorage.setItem('token', res['data']['token']);
+	                _this.router.navigate(['/home']);
+	            }
+	            console.log(res);
+	        }, function (err) {
+	        });
 	    };
 	    Login = __decorate([
 	        core_1.Component({
 	            selector: 'login',
 	            template: template,
+	            providers: [interceptor_1.HttpInterceptor]
 	        }), 
-	        __metadata('design:paramtypes', [router_1.Router, http_1.Http])
+	        __metadata('design:paramtypes', [router_1.Router, http_1.Http, interceptor_1.HttpInterceptor])
 	    ], Login);
 	    return Login;
 	}());
@@ -5104,24 +5186,24 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports) {
 
 	module.exports = "<br/> <br/>\n<div class=\"col-md-4 col-md-offset-4\">\n  <div class=\"card card-user\">\n    <div class=\"content\">\n      <div class=\"row\">\n        <div class=\"col-md-12\"> <h3>Login</h3> </div>\n      </div>\n      <div class=\"row\">\n        <div class=\"col-md-12\">\n          <form #loginForm=\"ngForm\" (ngSubmit)=\"login(loginForm)\" novalidate>\n            <div class=\"form-group\">\n              <label for=\"email\">Email Address </label>\n              <input class=\"form-control\" type=\"email\" id=\"email\" required [(ngModel)]=\"user.email\" name=\"email\" #email=\"ngModel\">\n            </div>\n            <div class=\"form-group\">\n              <label for=\"password\">Password </label>\n              <input class=\"form-control\" type=\"password\" id=\"password\" required [(ngModel)]=\"user.password\" name=\"password\" #password=\"ngModel\">\n            </div>\n            <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"!loginForm.valid\">Submit</button>\n          </form>\n        </div>\n      </div>\n      <div class=\"row\">\n        <br/> <br/>\n        <div class=\"col-md-12\">\n          <a [routerLink]=\"['/signup']\">Click here to Signup</a>\n          <br/>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n<footer-common> </footer-common>\n"
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(73));
+	__export(__webpack_require__(74));
 
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5137,22 +5219,38 @@ webpackJsonp([0],[
 	var core_1 = __webpack_require__(4);
 	var router_1 = __webpack_require__(25);
 	var http_1 = __webpack_require__(55);
-	var template = __webpack_require__(74);
+	var interceptor_1 = __webpack_require__(64);
+	var template = __webpack_require__(75);
 	var Signup = (function () {
-	    function Signup(router, http) {
+	    function Signup(router, http, httpInterceptor) {
 	        this.router = router;
 	        this.http = http;
+	        this.httpInterceptor = httpInterceptor;
 	        this.user = {};
 	    }
 	    Signup.prototype.signup = function () {
-	        console.log(this.user);
+	        var _this = this;
+	        var body = this.user;
+	        var Api = {
+	            url: 'signup',
+	            body: body
+	        };
+	        this.httpInterceptor.callApiPost(Api.url, Api.body)
+	            .subscribe(function (res) {
+	            if (res['status'] === 'success') {
+	                _this.router.navigate(['/login']);
+	            }
+	            console.log(res);
+	        }, function (err) {
+	        });
 	    };
 	    Signup = __decorate([
 	        core_1.Component({
 	            selector: 'signup',
 	            template: template,
+	            providers: [interceptor_1.HttpInterceptor]
 	        }), 
-	        __metadata('design:paramtypes', [router_1.Router, http_1.Http])
+	        __metadata('design:paramtypes', [router_1.Router, http_1.Http, interceptor_1.HttpInterceptor])
 	    ], Signup);
 	    return Signup;
 	}());
@@ -5160,24 +5258,24 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports) {
 
 	module.exports = "<br/> <br/>\n<div class=\"col-md-4 col-md-offset-4\">\n  <div class=\"card card-user\">\n    <div class=\"content\">\n      <div class=\"row\">\n        <div class=\"col-md-12\"> <h3>Login</h3> </div>\n      </div>\n      <div class=\"row\">\n        <div class=\"col-md-12\">\n          <form  role=\"form\" #signupForm=\"ngForm\" (ngSubmit)=\"signup()\" novalidate>\n            <div class=\"form-group\">\n              <label for=\"name\"> User Name  </label>\n              <input class=\"form-control\" type=\"text\" id=\"name\" required [(ngModel)]=\"user.name\" name=\"name\" #name=\"ngModel\">\n            </div>\n            <div class=\"form-group\">\n              <label for=\"email\">Email Address </label>\n              <input class=\"form-control\" type=\"email\" id=\"email\" required [(ngModel)]=\"user.email\" name=\"email\" #email=\"ngModel\">\n            </div>\n            <div class=\"form-group\">\n              <label for=\"password\">Password </label>\n              <input class=\"form-control\" type=\"password\" id=\"password\" required [(ngModel)]=\"user.password\" name=\"password\" #password=\"ngModel\">\n            </div>\n            <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"!signupForm.valid\">Submit</button>\n          </form>\n        </div>\n      </div>\n      <div class=\"row\">\n        <br/> <br/>\n        <div class=\"col-md-12\">\n          <a [routerLink]=\"['/login']\"> Already An Admin ? Log In Here </a>\n          <br/>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n<footer-common> </footer-common>\n"
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(76));
+	__export(__webpack_require__(77));
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5193,7 +5291,7 @@ webpackJsonp([0],[
 	var core_1 = __webpack_require__(4);
 	var router_1 = __webpack_require__(25);
 	var interceptor_1 = __webpack_require__(64);
-	var template = __webpack_require__(77);
+	var template = __webpack_require__(78);
 	var Profile = (function () {
 	    function Profile(router, route, httpInterceptor) {
 	        this.router = router;
@@ -5260,24 +5358,24 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports) {
 
 	module.exports = ""
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(79));
+	__export(__webpack_require__(80));
 
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5293,7 +5391,7 @@ webpackJsonp([0],[
 	var core_1 = __webpack_require__(4);
 	var router_1 = __webpack_require__(25);
 	var interceptor_1 = __webpack_require__(64);
-	var template = __webpack_require__(80);
+	var template = __webpack_require__(81);
 	var Gesture = (function () {
 	    function Gesture(router, route, httpInterceptor) {
 	        this.router = router;
@@ -5316,24 +5414,24 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports) {
 
 	module.exports = ""
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(82));
+	__export(__webpack_require__(83));
 
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5349,7 +5447,7 @@ webpackJsonp([0],[
 	var core_1 = __webpack_require__(4);
 	var router_1 = __webpack_require__(25);
 	var interceptor_1 = __webpack_require__(64);
-	var template = __webpack_require__(83);
+	var template = __webpack_require__(84);
 	var Keyboard = (function () {
 	    function Keyboard(router, route, httpInterceptor) {
 	        this.router = router;
@@ -5372,24 +5470,24 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports) {
 
 	module.exports = ""
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(85));
+	__export(__webpack_require__(86));
 
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5405,14 +5503,56 @@ webpackJsonp([0],[
 	var core_1 = __webpack_require__(4);
 	var router_1 = __webpack_require__(25);
 	var interceptor_1 = __webpack_require__(64);
-	var template = __webpack_require__(86);
+	var template = __webpack_require__(87);
 	var Voice = (function () {
 	    function Voice(router, route, httpInterceptor) {
 	        this.router = router;
 	        this.route = route;
 	        this.httpInterceptor = httpInterceptor;
+	        this.commands = [
+	            'take off', 'start', 'land',
+	            'right', 'left',
+	            'forward', 'backward',
+	            'up', 'higher', 'down', 'lower',
+	            'stop', 'hold'];
+	        this.str = '';
 	    }
-	    Voice.prototype.ngOnInit = function () { };
+	    Voice.prototype.ngOnInit = function () {
+	        var recognition = new (window.SpeechRecognition ||
+	            window.webkitSpeechRecognition ||
+	            window.mozSpeechRecognition ||
+	            window.msSpeechRecognition)();
+	        recognition.lang = 'en-US';
+	        recognition.interimResults = false;
+	        recognition.maxAlternatives = 5;
+	        setInterval(recognition.start(), 5000);
+	        setInterval(this.checkCommand(), 5000);
+	        recognition.onresult = function (event) {
+	            if (event.results[0][0].transcript === 'bye') {
+	                console.log('stopping');
+	                recognition.stop();
+	            }
+	            else {
+	                console.log(event.results[0][0].transcript);
+	                localStorage.setItem('command', event.results[0][0].transcript);
+	            }
+	        };
+	    };
+	    Voice.prototype.checkCommand = function () {
+	        localStorage.getItem('command') === '' ||
+	            localStorage.getItem('command') === null ||
+	            localStorage.getItem('command') === undefined
+	            ? this.str = localStorage.getItem('command') : this.str = 'Nothing';
+	        for (var key in this.commands) {
+	            if (this.str.search(this.commands[key]) !== -1) {
+	                this.makeCommand(this.commands[key]);
+	            }
+	        }
+	        localStorage.setItem('command', '');
+	    };
+	    Voice.prototype.makeCommand = function (word) {
+	        console.log(word);
+	    };
 	    Voice.prototype.ngOnDestroy = function () { };
 	    Voice = __decorate([
 	        core_1.Component({
@@ -5428,24 +5568,24 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports) {
 
-	module.exports = ""
+	module.exports = "\n"
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(88));
+	__export(__webpack_require__(89));
 
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5462,7 +5602,7 @@ webpackJsonp([0],[
 	var router_1 = __webpack_require__(25);
 	var interceptor_1 = __webpack_require__(64);
 	var auth_guard_1 = __webpack_require__(61);
-	var template = __webpack_require__(89);
+	var template = __webpack_require__(90);
 	var Nav = (function () {
 	    function Nav(router, httpInterceptor, authGuard) {
 	        this.router = router;
@@ -5489,24 +5629,24 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports) {
 
 	module.exports = "<nav class=\"navbar navbar-default\">\n  <div class=\"container-fluid\">\n    <div class=\"navbar-header\">\n      <button type=\"button\" class=\"navbar-toggle\">\n        <span class=\"sr-only\">Toggle navigation</span>\n        <span class=\"icon-bar bar1\"></span>\n        <span class=\"icon-bar bar2\"></span>\n        <span class=\"icon-bar bar3\"></span>\n      </button>\n    </div>\n    <div class=\"collapse navbar-collapse\">\n      <ul class=\"nav navbar-nav navbar-right\">\n        <li class=\"dropdown\">\n          <a [routerLink]=\"['/profile']\" >\n            <i class=\"ti-user\"></i> <p> Naw Ing </p>\n          </a>\n        </li>\n      </ul>\n    </div>\n  </div>\n</nav>\n"
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(91));
+	__export(__webpack_require__(92));
 
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5523,7 +5663,7 @@ webpackJsonp([0],[
 	var router_1 = __webpack_require__(25);
 	var interceptor_1 = __webpack_require__(64);
 	var auth_guard_1 = __webpack_require__(61);
-	var template = __webpack_require__(92);
+	var template = __webpack_require__(93);
 	var Header = (function () {
 	    function Header(router, httpInterceptor, authGuard) {
 	        this.router = router;
@@ -5550,24 +5690,24 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, exports) {
 
 	module.exports = "<div class=\"sidebar\" data-background-color=\"white\" data-active-color=\"danger\" *ngIf=\"authObject.isLoggedIn()\">\n  <div class=\"sidebar-wrapper\">\n    <div class=\"logo\">\n      <a [routerLink]=\"['/home']\" class=\"simple-text\">\n        Jarvis Drone\n      </a>\n    </div>\n\n    <ul class=\"nav\">\n      <li class=\"active\">\n        <a [routerLink]=\"['/home']\">\n          <i class=\"ti-mouse-alt\"></i>\n          <p> Manual </p>\n        </a>\n      </li>\n      <li>\n        <a [routerLink]=\"['/keyboard']\">\n          <i class=\"ti-game\"></i>\n          <p> Keyboard </p>\n        </a>\n      </li>\n      <li>\n        <a [routerLink]=\"['/voice']\">\n          <i class=\"ti-microphone\"></i>\n          <p> Voice </p>\n        </a>\n      </li>\n      <li>\n        <a [routerLink]=\"['/gesture']\">\n          <i class=\"ti-hand-open\"></i>\n          <p> Gesture </p>\n        </a>\n      </li>\n      <li>\n        <a [routerLink]=\"['/profile']\">\n          <i class=\"ti-user\"></i>\n          <p> Profile </p>\n        </a>\n      </li>\n      <li>\n        <a [routerLink]=\"['/login']\">\n          <i class=\"ti-layout-grid2-alt\"></i>\n          <p>Log Out</p>\n        </a>\n      </li>\n    </ul>\n  </div>\n</div>\n"
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(94));
+	__export(__webpack_require__(95));
 
 
 /***/ }),
-/* 94 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5583,7 +5723,7 @@ webpackJsonp([0],[
 	var core_1 = __webpack_require__(4);
 	var router_1 = __webpack_require__(25);
 	var interceptor_1 = __webpack_require__(64);
-	var template = __webpack_require__(95);
+	var template = __webpack_require__(96);
 	var Footer = (function () {
 	    function Footer(router, httpInterceptor) {
 	        this.router = router;
@@ -5607,13 +5747,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 95 */
+/* 96 */
 /***/ (function(module, exports) {
 
 	module.exports = "  <footer class=\"footer\">\n    <div class=\"container-fluid\">\n      <div class=\"pull-right\">\n        Jarvis Drone &copy; AI Control Panel For Parrot AR Drone, <br/> Made With <i class=\"fa fa-heart heart\"></i> by Naw Ing\n      </div>\n    </div>\n  </footer>\n"
 
 /***/ }),
-/* 96 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5628,7 +5768,7 @@ webpackJsonp([0],[
 	};
 	var core_1 = __webpack_require__(4);
 	var router_1 = __webpack_require__(25);
-	var template = __webpack_require__(97);
+	var template = __webpack_require__(98);
 	var App = (function () {
 	    function App(router) {
 	        this.router = router;
@@ -5646,23 +5786,23 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 97 */
+/* 98 */
 /***/ (function(module, exports) {
 
 	module.exports = "<div class=\"wrapper\">\n  <header-common> </header-common>\n  <router-outlet></router-outlet>\n</div>\n"
 
 /***/ }),
-/* 98 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var home_1 = __webpack_require__(62);
-	var login_1 = __webpack_require__(69);
-	var signup_1 = __webpack_require__(72);
-	var profile_1 = __webpack_require__(75);
-	var gesture_1 = __webpack_require__(78);
-	var keyboard_1 = __webpack_require__(81);
-	var voice_1 = __webpack_require__(84);
+	var login_1 = __webpack_require__(70);
+	var signup_1 = __webpack_require__(73);
+	var profile_1 = __webpack_require__(76);
+	var gesture_1 = __webpack_require__(79);
+	var keyboard_1 = __webpack_require__(82);
+	var voice_1 = __webpack_require__(85);
 	exports.routes = [
 	    { path: 'login', component: login_1.Login },
 	    { path: 'signup', component: signup_1.Signup },

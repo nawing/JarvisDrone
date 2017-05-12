@@ -1,18 +1,20 @@
-var authentication  = require('../app/controllers/authentication');
+var user            = require('../app/controllers/user');
 var manuals         = require('../app/controllers/manuals');
 
 var mongo = require('mongodb');
 
 module.exports = function (app, passport) {
 
-  app.post('login',         function(req, res) { authentication.login(req,res); });
-  app.post('signup',        function(req, res) { authentication.create(req,res); });
-  
-  app.get ('me',            function(req, res) { authentication.show(req,res); });
-  app.post('me',            function(req, res) { authentication.edit(req,res); });
 
   app.get ('/',             function(req, res) { res.sendfile('public/index.html'); });
-  app.post('/api/takeoff',  function(req, res) { manuals.takeoff(req, res); });
+
+
+  app.post('/api/login',    function(req, res) { user.login(req,res); });
+  app.post('/api/signup',   function(req, res) { user.create(req,res); });
+  app.get ('/api/me',       function(req, res) { user.show(req,res); });
+  app.post('/api/me',       function(req, res) { user.edit(req,res); });
+
+  app.post('/api/takeOff',  function(req, res) { manuals.takeOff(req, res); });
   app.post('/api/land',     function(req, res) { manuals.land(req, res); });
   app.post('/api/right',    function(req, res) { manuals.rotateClockWise(req, res); });
   app.post('/api/left',     function(req, res) { manuals.rotateClockAntiWise(req, res); });

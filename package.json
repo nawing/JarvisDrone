@@ -2,16 +2,14 @@
   "name": "projectDrone",
   "version": "0.0.1",
   "private": true,
-  "scripts" : {
-    "start" : "node app.js"
-    },
+  "scripts": {
+    "start": "node app.js"
+  },
   "dependencies": {
-    "buffy": "0.0.4",
-    "simple-debug": "~1.1.1",
-    "sync": "latest",
     "basic-auth-connect": "latest",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.13.2",
+    "buffy": "0.0.4",
     "client-sessions": "latest",
     "connect": "latest",
     "connect-flash": "latest",
@@ -23,11 +21,12 @@
     "express-mailer": "^0.3.0",
     "express-session": "latest",
     "fs-extra": "latest",
+    "http": "latest",
     "http-proxy": "latest",
     "md5": "latest",
     "mime": "latest",
     "mongoose": "latest",
-    "mongoose-paginate" : "latest",
+    "mongoose-paginate": "latest",
     "morgan": "~1.6.1",
     "multer": "latest",
     "mysql": "latest",
@@ -37,15 +36,16 @@
     "nodemon": "latest",
     "numeral": "latest",
     "passport": "latest",
+    "passport-http-bearer": "latest",
     "passport-local": "latest",
     "pm2": "latest",
     "request": "latest",
     "serve-favicon": "~2.3.0",
+    "simple-debug": "~1.1.1",
     "simple-encryptor": "latest",
-    "underscore": "latest",
-    "passport-http-bearer" : "latest",
-    "socket.io" : "latest",
-    "http" : "latest"
+    "socket.io": "latest",
+    "sync": "latest",
+    "underscore": "latest"
   },
   "devDependencies": {
     "utest": "0.0.6",
@@ -54,9 +54,7 @@
     "jshint": "2.3.0",
     "ffmpeg": "latest"
   },
-  "optionalDependencies": {
-    
-  },
+  "optionalDependencies": {},
   "engines": {
     "node": "*"
   }
