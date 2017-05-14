@@ -4921,7 +4921,6 @@ webpackJsonp([0],[
 	        };
 	        this.httpInterceptor.callApiPost(Api.url, Api.body)
 	            .subscribe(function (res) {
-	            console.log(res);
 	        }, function (err) {
 	        });
 	    };
@@ -5000,6 +4999,7 @@ webpackJsonp([0],[
 	            .map(function (response) {
 	            if (response.json().status === 'success') {
 	                console.log(response.json());
+	                responsiveVoice.speak(response.json().message);
 	                _this.notify('success', response.json().message);
 	                return response.json();
 	            }
@@ -5096,13 +5096,11 @@ webpackJsonp([0],[
 	        };
 	        this.httpInterceptor.callApiPost(Api.url, Api.body)
 	            .subscribe(function (res) {
-	            console.log(res['status']);
 	            if (res['status'] === 'success') {
 	                localStorage.setItem('token', res['data']['token']);
 	                localStorage.setItem('name', res['data']['name']);
 	                _this.router.navigate(['/home']);
 	            }
-	        }, function (err) {
 	        });
 	    };
 	    Login = __decorate([
@@ -5122,7 +5120,7 @@ webpackJsonp([0],[
 /* 71 */
 /***/ (function(module, exports) {
 
-	module.exports = "<br/> <br/>\n<div class=\"col-md-4 col-md-offset-4\">\n  <div class=\"card card-user\">\n    <div class=\"content\">\n      <div class=\"row\">\n        <div class=\"col-md-12\"> <h3>Login</h3> </div>\n      </div>\n      <div class=\"row\">\n        <div class=\"col-md-12\">\n          <form #loginForm=\"ngForm\" (ngSubmit)=\"login(loginForm)\" novalidate>\n            <div class=\"form-group\">\n              <label for=\"email\">Email Address </label>\n              <input class=\"form-control\" type=\"email\" id=\"email\" required [(ngModel)]=\"user.email\" name=\"email\" #email=\"ngModel\">\n            </div>\n            <div class=\"form-group\">\n              <label for=\"password\">Password </label>\n              <input class=\"form-control\" type=\"password\" id=\"password\" required [(ngModel)]=\"user.password\" name=\"password\" #password=\"ngModel\">\n            </div>\n            <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"!loginForm.valid\">Submit</button>\n          </form>\n        </div>\n      </div>\n      <div class=\"row\">\n        <br/> <br/>\n        <div class=\"col-md-12\">\n          <a [routerLink]=\"['/signup']\">Click here to Signup</a>\n          <br/>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n<footer-common> </footer-common>\n"
+	module.exports = "<br/> <br/>\n<div class=\"col-md-4 col-md-offset-4\">\n  <div class=\"card card-user\">\n    <div class=\"content\">\n      <div class=\"row\">\n        <div class=\"col-md-12\"> <h3>Login</h3> </div>\n        <!-- <input onclick='responsiveVoice.speak(\"Hello World\");' type='button' value='🔊 Play' /> -->\n      </div>\n      <div class=\"row\">\n        <div class=\"col-md-12\">\n          <form #loginForm=\"ngForm\" (ngSubmit)=\"login(loginForm)\" novalidate>\n            <div class=\"form-group\">\n              <label for=\"email\">Email Address </label>\n              <input class=\"form-control\" type=\"email\" id=\"email\" required [(ngModel)]=\"user.email\" name=\"email\" #email=\"ngModel\">\n            </div>\n            <div class=\"form-group\">\n              <label for=\"password\">Password </label>\n              <input class=\"form-control\" type=\"password\" id=\"password\" required [(ngModel)]=\"user.password\" name=\"password\" #password=\"ngModel\">\n            </div>\n            <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"!loginForm.valid\">Submit</button>\n          </form>\n        </div>\n      </div>\n      <div class=\"row\">\n        <br/> <br/>\n        <div class=\"col-md-12\">\n          <a [routerLink]=\"['/signup']\">Click here to Signup</a>\n          <br/>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n<footer-common> </footer-common>\n"
 
 /***/ }),
 /* 72 */
@@ -5442,30 +5440,107 @@ webpackJsonp([0],[
 	        this.router = router;
 	        this.route = route;
 	        this.httpInterceptor = httpInterceptor;
-	        this.commands = [
-	            'take off', 'start', 'land',
-	            'right', 'left',
-	            'forward', 'backward',
-	            'up', 'higher', 'down', 'lower',
-	            'stop', 'hold'];
 	        this.str = '';
 	    }
 	    Voice.prototype.ngOnInit = function () {
-	    };
-	    Voice.prototype.checkCommand = function () {
-	        localStorage.getItem('command') === '' ||
-	            localStorage.getItem('command') === null ||
-	            localStorage.getItem('command') === undefined
-	            ? this.str = localStorage.getItem('command') : this.str = 'Nothing';
-	        for (var key in this.commands) {
-	            if (this.str.search(this.commands[key]) !== -1) {
-	                this.makeCommand(this.commands[key]);
+	        var ajax = this.httpInterceptor;
+	        var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+	        recognition.lang = 'en-US';
+	        recognition.interimResults = false;
+	        recognition.maxAlternatives = 5;
+	        recognition.start();
+	        recognition.onstart = function () {
+	            $("#message").text('Say Something');
+	        };
+	        recognition.onsoundstart = function () {
+	            $("#message").text('Listening');
+	        };
+	        recognition.onsoundend = function () {
+	            recognition.stop();
+	            setTimeout(function () {
+	                recognition.start();
+	            }, 1000);
+	        };
+	        recognition.onend = function () {
+	            $("#message").text('Sleeping, Press The Button To Wake Me Up');
+	        };
+	        recognition.onresult = function (event) {
+	            $("#message").text('Got It! Sir. You Said ' + event.results[0][0].transcript);
+	            if (event.results[0][0].transcript === 'bye') {
+	                $("#message").text('Bye Bye ^^');
+	                recognition.stop();
+	            }
+	            else {
+	                checkCommand(event.results[0][0].transcript);
+	            }
+	        };
+	        function checkCommand(data) {
+	            var commands = ['take off', 'start',
+	                'land', 'landing',
+	                'right', 'left',
+	                'forward', 'come', 'backward',
+	                'up', 'higher',
+	                'down', 'lower',
+	                'stop', 'hold'];
+	            var result = '';
+	            for (var key in commands) {
+	                if (data.search(commands[key]) !== -1) {
+	                    result = commands[key];
+	                }
+	            }
+	            if (result === '') {
+	            }
+	            else {
+	                makeCommand(result);
 	            }
 	        }
-	        localStorage.setItem('command', '');
+	        function makeCommand(data) {
+	            if (data === 'take off' || data === 'start') {
+	                controlSubmit('takeOff');
+	            }
+	            else if (data === 'land' || data === 'landing') {
+	                controlSubmit('land');
+	            }
+	            else if (data === 'right') {
+	                controlSubmit('right');
+	            }
+	            else if (data === 'left') {
+	                controlSubmit('left');
+	            }
+	            else if (data === 'forward' || data === 'come') {
+	                controlSubmit('forward');
+	            }
+	            else if (data === 'backward') {
+	                controlSubmit('backward');
+	            }
+	            else if (data === 'up' || data === 'higher') {
+	                controlSubmit('flyUp');
+	            }
+	            else if (data === 'down' || data === 'lower') {
+	                controlSubmit('flyDown');
+	            }
+	            else if (data === 'stop' || data === 'hold') {
+	                controlSubmit('hold');
+	            }
+	        }
+	        function controlSubmit(status) {
+	            var body = {};
+	            var Api = {
+	                url: status,
+	                body: body
+	            };
+	            ajax.callApiPost(Api.url, Api.body)
+	                .subscribe(function (res) {
+	            }, function (err) {
+	            });
+	        }
 	    };
-	    Voice.prototype.makeCommand = function (word) {
-	        console.log(word);
+	    Voice.prototype.restartSpeech = function () {
+	        var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+	        recognition.lang = 'en-US';
+	        recognition.interimResults = false;
+	        recognition.maxAlternatives = 5;
+	        recognition.start();
 	    };
 	    Voice.prototype.ngOnDestroy = function () { };
 	    Voice = __decorate([
@@ -5485,7 +5560,7 @@ webpackJsonp([0],[
 /* 86 */
 /***/ (function(module, exports) {
 
-	module.exports = "\n"
+	module.exports = "\n<div class=\"main-panel\">\n  <nav-common> </nav-common>\n  <br/> <br/>\n  <div class=\"col-md-4 col-md-offset-4\">\n    <div class=\"card card-user\">\n      <div class=\"content\">\n        <div class=\"row\">\n          <div class=\"col-md-12 text-center\"> <h3> Ready Sir </h3> </div>\n        </div>\n        <div class=\"row\">\n          <div class=\"col-md-12\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"icon-big icon-warning text-center\">\n                  <i class=\"ti-microphone\"></i>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p id=\"message\"> </p>\n                  <button (click)=\"restartSpeech()\" class=\"btn btn-danger\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 /* 87 */
@@ -5522,10 +5597,14 @@ webpackJsonp([0],[
 	        this.router = router;
 	        this.httpInterceptor = httpInterceptor;
 	        this.authGuard = authGuard;
+	        this.navObjects = {
+	            name: '',
+	            token: ''
+	        };
 	    }
 	    Nav.prototype.ngOnInit = function () {
 	        this.authObject = this.authGuard;
-	        console.log(localStorage.getItem('token'));
+	        this.navObjects['name'] = localStorage.getItem('name');
 	    };
 	    ;
 	    Nav.prototype.ngDestroy = function () { };
@@ -5547,7 +5626,7 @@ webpackJsonp([0],[
 /* 89 */
 /***/ (function(module, exports) {
 
-	module.exports = "<nav class=\"navbar navbar-default\">\n  <div class=\"container-fluid\">\n    <div class=\"navbar-header\">\n      <button type=\"button\" class=\"navbar-toggle\">\n        <span class=\"sr-only\">Toggle navigation</span>\n        <span class=\"icon-bar bar1\"></span>\n        <span class=\"icon-bar bar2\"></span>\n        <span class=\"icon-bar bar3\"></span>\n      </button>\n    </div>\n    <div class=\"collapse navbar-collapse\">\n      <ul class=\"nav navbar-nav navbar-right\">\n        <li class=\"dropdown\">\n          <a [routerLink]=\"['/profile']\" >\n            <i class=\"ti-user\"></i> <p> Naw Ing </p>\n          </a>\n        </li>\n      </ul>\n    </div>\n  </div>\n</nav>\n"
+	module.exports = "<nav class=\"navbar navbar-default\">\n  <div class=\"container-fluid\">\n    <div class=\"navbar-header\">\n      <button type=\"button\" class=\"navbar-toggle\">\n        <span class=\"sr-only\">Toggle navigation</span>\n        <span class=\"icon-bar bar1\"></span>\n        <span class=\"icon-bar bar2\"></span>\n        <span class=\"icon-bar bar3\"></span>\n      </button>\n    </div>\n    <div class=\"collapse navbar-collapse\">\n      <ul class=\"nav navbar-nav navbar-right\">\n        <li class=\"dropdown\">\n          <a [routerLink]=\"['/profile']\" >\n            <i class=\"ti-user\"></i> <p> {{navObjects.name}} </p>\n          </a>\n        </li>\n      </ul>\n    </div>\n  </div>\n</nav>\n"
 
 /***/ }),
 /* 90 */

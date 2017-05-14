@@ -58,6 +58,7 @@ export class HttpInterceptor {
       .map(response => {
         if (response.json().status === 'success') {
           console.log(response.json());
+          responsiveVoice.speak(response.json().message);
           this.notify('success', response.json().message);
           return response.json();
         } else {
@@ -78,7 +79,6 @@ export class HttpInterceptor {
           type: type,
           timer: 3000
       });
-
       // var textToSpeechJs = require("text-to-speech-js");
       // textToSpeechJs.talk(message);
   }

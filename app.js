@@ -1,29 +1,25 @@
-var express = require('express');
-
-var app       = express();
-var multer    = require('multer')
-var constants = require('constants');
-var constant  = require('./config/constants');
-var port      = process.env.PORT || 8042;
-var mongoose  = require('mongoose');
-var passport  = require('passport');
-var flash     = require('connect-flash');
-var path      = require('path');
-var cors      = require('cors');
-
+var express       = require('express');
+var app           = express();
+var multer        = require('multer')
+var constants     = require('constants');
+var constant      = require('./config/constants');
+var port          = process.env.PORT || 8042;
+var mongoose      = require('mongoose');
+var passport      = require('passport');
+var flash         = require('connect-flash');
+var path          = require('path');
+var cors          = require('cors');
 var morgan        = require('morgan');
 var cookieParser  = require('cookie-parser');
 var bodyParser    = require('body-parser');
 var session       = require('express-session');
 var bodyParser    = require('body-parser');
 var dateFormat    = require('dateformat');
-
-var http    = require('http');
-var socket  = require("socket.io");
+var http          = require('http');
+var socket        = require("socket.io");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-
 
 /***************Mongodb configuratrion********************/
 var mongoose = require('mongoose');

@@ -8,60 +8,116 @@ const template = require('./voice.html');
 	providers : [HttpInterceptor]
 })
 export class Voice implements OnInit {
-	private commands = [
-		'take off', 'start', 'land',
-		'right', 'left',
-		'forward', 'backward' ,
-		'up', 'higher', 'down', 'lower',
-		'stop', 'hold' ];
-
 	private str = '';
-
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private httpInterceptor: HttpInterceptor) {}
 
   ngOnInit() {
-		var recognition = new (
-			window.SpeechRecognition ||
-			window.webkitSpeechRecognition ||
-			window.mozSpeechRecognition ||
-			window.msSpeechRecognition)();
+		var ajax = this.httpInterceptor;
+		var recognition = new ( window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+		recognition.lang = 'en-US';
+		recognition.interimResults = false;
+		recognition.maxAlternatives = 5;
+		recognition.start();
 
-			recognition.lang = 'en-US';
-			recognition.interimResults = false;
-			recognition.maxAlternatives = 5;
-			setInterval(recognition.start(), 5000);
-			setInterval(this.checkCommand(), 5000);
-			recognition.onresult = function (event) {
-				if (event.results[0][0].transcript === 'bye') {
-					console.log('stopping');
-					recognition.stop();
-				} else {
-					console.log(event.results[0][0].transcript);
-					localStorage.setItem('command', event.results[0][0].transcript);
-				}
-			};
-	}
+		recognition.onstart = function() {
+			$("#message").text('Say Something');
+		};
 
-	checkCommand() {
-		localStorage.getItem('command') === '' ||
-		localStorage.getItem('command') === null ||
-		localStorage.getItem('command') === undefined
-		? this.str = localStorage.getItem('command') : this.str = 'Nothing';
+		recognition.onsoundstart = function() {
+			$("#message").text('Listening');
+		}
 
-		for (let key in this.commands) {
-			if(this.str.search(this.commands[key]) !== -1) {
-				this.makeCommand(this.commands[key]);
+		recognition.onsoundend = function() {
+			recognition.stop();
+			setTimeout(function() {
+				recognition.start();
+			}, 1000);
+		}
+
+		recognition.onend = function() {
+			$("#message").text('Sleeping, Press The Button To Wake Me Up');
+		}
+
+		recognition.onresult = function (event) {
+			$("#message").text('Got It! Sir. You Said '+ event.results[0][0].transcript);
+			if (event.results[0][0].transcript === 'bye') {
+				$("#message").text('Bye Bye ^^');
+				recognition.stop();
+			} else {
+				checkCommand(event.results[0][0].transcript);
+			}
+		};
+
+		function checkCommand(data) {
+		 	var commands = [ 'take off', 'start',
+		 	'land', 'landing',
+		 	'right', 'left',
+		 	'forward', 'come', 'backward' ,
+		 	'up', 'higher',
+		 	'down', 'lower',
+		 	'stop', 'hold' ];
+		 	var result = '';
+		 	for (let key in commands) {
+			 	if(data.search(commands[key]) !== -1) {
+	 			result = commands[key];
+			 	}
+		 	}
+		 	if(result === '') {
+
+		 	} else {
+			 	makeCommand(result);
+		 	}
+		}
+
+		function makeCommand(data) {
+			if (data === 'take off' || data === 'start') {
+				controlSubmit('takeOff');
+			} else if (data === 'land' || data === 'landing') {
+				controlSubmit('land');
+			} else if (data === 'right') {
+				controlSubmit('right');
+			} else if (data === 'left') {
+				controlSubmit('left');
+			} else if (data === 'forward' || data === 'come') {
+				controlSubmit('forward');
+			} else if (data === 'backward') {
+				controlSubmit('backward');
+			} else if (data === 'up' 		|| data === 'higher') {
+				controlSubmit('flyUp');
+			} else if (data === 'down' 	|| data === 'lower') {
+				controlSubmit('flyDown');
+			} else if (data === 'stop' 	|| data === 'hold') {
+				controlSubmit('hold');
 			}
 		}
-		localStorage.setItem('command', '');
 
+		function controlSubmit(status) {
+			let body = {}
+			let Api = {
+				url : status,
+				body : body
+			};
+			ajax.callApiPost(Api.url, Api.body)
+				.subscribe(
+					res => {
+
+					},
+					err => {
+
+					});
+				}
 	}
 
-	makeCommand(word) {
-		console.log(word);
+
+	restartSpeech() {
+		var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+		recognition.lang = 'en-US';
+		recognition.interimResults = false;
+		recognition.maxAlternatives = 5;
+		recognition.start();
 	}
 
   ngOnDestroy() { }

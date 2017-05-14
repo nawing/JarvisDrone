@@ -10,7 +10,10 @@ const template = require('./nav.html');
 	providers : [HttpInterceptor]
 })
 export class Nav implements OnInit {
-	private navObjects: any;
+	private navObjects: Object = {
+		name : '',
+		token : ''
+	}
 	private authObject: any;
 	constructor(
 		private router: Router,
@@ -19,7 +22,7 @@ export class Nav implements OnInit {
 		) {}
 		ngOnInit() {
 			this.authObject = this.authGuard;
-			console.log(localStorage.getItem('token'));
+			this.navObjects['name'] = localStorage.getItem('name');
 		};
 		ngDestroy() {};
 }
