@@ -1,0 +1,48 @@
+<div class="sidebar" data-background-color="white" data-active-color="danger" *ngIf="authObject.isLoggedIn()">
+  <div class="sidebar-wrapper">
+    <div class="logo">
+      <a [routerLink]="['/home']" class="simple-text">
+        Jarvis Drone
+      </a>
+    </div>
+
+    <ul class="nav">
+      <li class="active">
+        <a [routerLink]="['/home']">
+          <i class="ti-mouse-alt"></i>
+          <p> Manual </p>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/keyboard']">
+          <i class="ti-game"></i>
+          <p> Keyboard </p>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/voice']">
+          <i class="ti-microphone"></i>
+          <p> Voice </p>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/gesture']">
+          <i class="ti-hand-open"></i>
+          <p> Gesture </p>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/profile']">
+          <i class="ti-user"></i>
+          <p> Profile </p>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/login']">
+          <i class="ti-layout-grid2-alt"></i>
+          <p>Log Out</p>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

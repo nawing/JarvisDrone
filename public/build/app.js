@@ -59,17 +59,17 @@ webpackJsonp([0],[
 	var angular2_jwt_1 = __webpack_require__(58);
 	var auth_guard_1 = __webpack_require__(61);
 	var home_1 = __webpack_require__(62);
-	var login_1 = __webpack_require__(70);
-	var signup_1 = __webpack_require__(73);
-	var profile_1 = __webpack_require__(76);
-	var gesture_1 = __webpack_require__(79);
-	var keyboard_1 = __webpack_require__(82);
-	var voice_1 = __webpack_require__(85);
-	var nav_1 = __webpack_require__(88);
-	var header_1 = __webpack_require__(91);
-	var footer_1 = __webpack_require__(94);
-	var app_1 = __webpack_require__(97);
-	var app_routes_1 = __webpack_require__(99);
+	var login_1 = __webpack_require__(69);
+	var signup_1 = __webpack_require__(72);
+	var profile_1 = __webpack_require__(75);
+	var gesture_1 = __webpack_require__(78);
+	var keyboard_1 = __webpack_require__(81);
+	var voice_1 = __webpack_require__(84);
+	var nav_1 = __webpack_require__(87);
+	var header_1 = __webpack_require__(90);
+	var footer_1 = __webpack_require__(93);
+	var app_1 = __webpack_require__(96);
+	var app_routes_1 = __webpack_require__(98);
 	var AppModule = (function () {
 	    function AppModule() {
 	    }
@@ -4861,14 +4861,12 @@ webpackJsonp([0],[
 	        return false;
 	    };
 	    AuthGuard.prototype.isLoggedIn = function () {
-	        if (localStorage.getItem('token') === undefined ||
-	            localStorage.getItem('token') === '' ||
-	            localStorage.getItem('token') === null) {
-	            return false;
-	        }
-	        else {
+	        if (localStorage.getItem('token') !== undefined ||
+	            localStorage.getItem('token') !== '' ||
+	            localStorage.getItem('token') !== null) {
 	            return true;
 	        }
+	        return false;
 	    };
 	    AuthGuard = __decorate([
 	        core_1.Injectable(), 
@@ -4908,7 +4906,7 @@ webpackJsonp([0],[
 	var http_1 = __webpack_require__(55);
 	var router_1 = __webpack_require__(25);
 	var interceptor_1 = __webpack_require__(64);
-	var template = __webpack_require__(69);
+	var template = __webpack_require__(68);
 	var Home = (function () {
 	    function Home(router, http, httpInterceptor) {
 	        this.router = router;
@@ -4983,7 +4981,6 @@ webpackJsonp([0],[
 	            device: this.device,
 	            lat: localStorage.getItem('lat'),
 	            lng: localStorage.getItem('lng'),
-	            token: localStorage.getItem('token')
 	        };
 	        for (var key in _body) {
 	            __body[key] = _body[key];
@@ -5022,8 +5019,6 @@ webpackJsonp([0],[
 	            type: type,
 	            timer: 3000
 	        });
-	        var textToSpeechJs = __webpack_require__(68);
-	        textToSpeechJs.talk(message);
 	    };
 	    HttpInterceptor = __decorate([
 	        core_1.Injectable(), 
@@ -5041,8 +5036,10 @@ webpackJsonp([0],[
 	"use strict";
 	var http_1 = __webpack_require__(55);
 	exports.contentHeaders = new http_1.Headers();
+	var token = localStorage.getItem('token');
 	exports.contentHeaders.append('Accept', 'application/x-www-form-urlencoded');
 	exports.contentHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
+	exports.contentHeaders.append('Authorization', 'Bearer ' + token);
 
 
 /***/ }),
@@ -5051,86 +5048,21 @@ webpackJsonp([0],[
 /* 68 */
 /***/ (function(module, exports) {
 
-	"use strict";
-	
-	(function (window) {
-	    var TextToSpeech = {
-	        _key: "addf7ce48a11e371d6fa2a7b6075b9937ab=a6e2f7e1be80d86db2f56bd67953b0bb",
-	        _lang: "en",
-	        _voiceId: "en_gb_amy"
-	
-	        /**
-	         * talk
-	         * Convert the provided text into speech.
-	         *
-	         * @name talk
-	         * @function
-	         * @param {Object} options An object containing:
-	         *
-	         *   - text: a string that must be converted in speech
-	         *   - notNow (default: false): don't play it now
-	         *
-	         * @param {Boolean} notNow Autoplay or not.
-	         * @return {Audio} The `Audio` instance.
-	         */
-	        , talk: function talk(options, notNow) {
-	
-	            if (!options) {
-	                throw new Error("Please provide options.");
-	            }
-	
-	            // handle string values
-	            if (typeof options === "string") {
-	                options = {
-	                    text: options
-	                };
-	            }
-	
-	            // encode text
-	            options.text = btoa(options.text);
-	
-	            // convert to boolean
-	            notNow = Boolean(notNow);
-	
-	            // set the tts url
-	            var voiceId = btoa(options.voiceId || TextToSpeech._voiceId),
-	                language = options.lang || TextToSpeech._lang,
-	                key = options.key || TextToSpeech._key,
-	                ttsUrl = "http://www.ivona.com/voicetest.php?rtr=1&t2r=" + options.text + "&v2r=" + voiceId + "&lang=" + language + "&" + key,
-	                thisSpeech = new Audio(ttsUrl);
-	
-	            // if not now is false, play it
-	            if (!notNow) {
-	                thisSpeech.play();
-	            }
-	
-	            // return audio object to the user
-	            return thisSpeech;
-	        }
-	    };
-	
-	    window.TextToSpeech = TextToSpeech;
-	})(window);
-
-/***/ }),
-/* 69 */
-/***/ (function(module, exports) {
-
 	module.exports = "<div class=\"main-panel\">\n\n  <nav-common> </nav-common>\n\n  <div class=\"content\">\n    <div class=\"container-fluid\">\n      <div class=\"row\">\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-warning text-center\"> <i class=\"ti-rocket\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Take Off </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('takeOff')\" class=\"btn btn-danger\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-success text-center\"> <i class=\"ti-magnet\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Land </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('land')\" class=\"btn btn-primary\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-danger text-center\"> <i class=\"ti-angle-double-right\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Rotate Right </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('right')\" class=\"btn btn-info\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-primary text-center\"> <i class=\"ti-angle-double-left\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Rotate Left </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('left')\" class=\"btn btn-success\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-info text-center\"> <i class=\"ti-angle-double-up\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Move Forward </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('forward')\" class=\"btn btn-default\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-danger text-center\"> <i class=\"ti-angle-double-down\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Move Backward </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('backward')\" class=\"btn btn-info\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-warning text-center\"> <i class=\"ti-angle-up\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Fly Up </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('flyUp')\" class=\"btn btn-success\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-success text-center\"> <i class=\"ti-angle-down\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Fly Down </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('flyDown')\" class=\"btn btn-info\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n        <div class=\"col-lg-3 col-sm-6\">\n          <div class=\"card\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"col-xs-5\">\n                  <div class=\"icon-big icon-default text-center\"> <i class=\"ti-wheelchair\"></i> </div>\n                </div>\n                <div class=\"col-xs-7\">\n                  <div class=\"numbers\"> <p> Hold Position </p> </div>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p> Press </p>\n                  <button (click)=\"controlSubmit('hold')\" class=\"btn btn-warning\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n\n      </div>\n    </div>\n  </div>\n  <footer-common> </footer-common>\n</div>\n"
 
 /***/ }),
-/* 70 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(71));
+	__export(__webpack_require__(70));
 
 
 /***/ }),
-/* 71 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5147,7 +5079,7 @@ webpackJsonp([0],[
 	var router_1 = __webpack_require__(25);
 	var http_1 = __webpack_require__(55);
 	var interceptor_1 = __webpack_require__(64);
-	var template = __webpack_require__(72);
+	var template = __webpack_require__(71);
 	var Login = (function () {
 	    function Login(router, http, httpInterceptor) {
 	        this.router = router;
@@ -5164,11 +5096,12 @@ webpackJsonp([0],[
 	        };
 	        this.httpInterceptor.callApiPost(Api.url, Api.body)
 	            .subscribe(function (res) {
+	            console.log(res['status']);
 	            if (res['status'] === 'success') {
 	                localStorage.setItem('token', res['data']['token']);
+	                localStorage.setItem('name', res['data']['name']);
 	                _this.router.navigate(['/home']);
 	            }
-	            console.log(res);
 	        }, function (err) {
 	        });
 	    };
@@ -5186,24 +5119,24 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 72 */
+/* 71 */
 /***/ (function(module, exports) {
 
 	module.exports = "<br/> <br/>\n<div class=\"col-md-4 col-md-offset-4\">\n  <div class=\"card card-user\">\n    <div class=\"content\">\n      <div class=\"row\">\n        <div class=\"col-md-12\"> <h3>Login</h3> </div>\n      </div>\n      <div class=\"row\">\n        <div class=\"col-md-12\">\n          <form #loginForm=\"ngForm\" (ngSubmit)=\"login(loginForm)\" novalidate>\n            <div class=\"form-group\">\n              <label for=\"email\">Email Address </label>\n              <input class=\"form-control\" type=\"email\" id=\"email\" required [(ngModel)]=\"user.email\" name=\"email\" #email=\"ngModel\">\n            </div>\n            <div class=\"form-group\">\n              <label for=\"password\">Password </label>\n              <input class=\"form-control\" type=\"password\" id=\"password\" required [(ngModel)]=\"user.password\" name=\"password\" #password=\"ngModel\">\n            </div>\n            <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"!loginForm.valid\">Submit</button>\n          </form>\n        </div>\n      </div>\n      <div class=\"row\">\n        <br/> <br/>\n        <div class=\"col-md-12\">\n          <a [routerLink]=\"['/signup']\">Click here to Signup</a>\n          <br/>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n<footer-common> </footer-common>\n"
 
 /***/ }),
-/* 73 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(74));
+	__export(__webpack_require__(73));
 
 
 /***/ }),
-/* 74 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5220,7 +5153,7 @@ webpackJsonp([0],[
 	var router_1 = __webpack_require__(25);
 	var http_1 = __webpack_require__(55);
 	var interceptor_1 = __webpack_require__(64);
-	var template = __webpack_require__(75);
+	var template = __webpack_require__(74);
 	var Signup = (function () {
 	    function Signup(router, http, httpInterceptor) {
 	        this.router = router;
@@ -5258,24 +5191,24 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 75 */
+/* 74 */
 /***/ (function(module, exports) {
 
 	module.exports = "<br/> <br/>\n<div class=\"col-md-4 col-md-offset-4\">\n  <div class=\"card card-user\">\n    <div class=\"content\">\n      <div class=\"row\">\n        <div class=\"col-md-12\"> <h3>Login</h3> </div>\n      </div>\n      <div class=\"row\">\n        <div class=\"col-md-12\">\n          <form  role=\"form\" #signupForm=\"ngForm\" (ngSubmit)=\"signup()\" novalidate>\n            <div class=\"form-group\">\n              <label for=\"name\"> User Name  </label>\n              <input class=\"form-control\" type=\"text\" id=\"name\" required [(ngModel)]=\"user.name\" name=\"name\" #name=\"ngModel\">\n            </div>\n            <div class=\"form-group\">\n              <label for=\"email\">Email Address </label>\n              <input class=\"form-control\" type=\"email\" id=\"email\" required [(ngModel)]=\"user.email\" name=\"email\" #email=\"ngModel\">\n            </div>\n            <div class=\"form-group\">\n              <label for=\"password\">Password </label>\n              <input class=\"form-control\" type=\"password\" id=\"password\" required [(ngModel)]=\"user.password\" name=\"password\" #password=\"ngModel\">\n            </div>\n            <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"!signupForm.valid\">Submit</button>\n          </form>\n        </div>\n      </div>\n      <div class=\"row\">\n        <br/> <br/>\n        <div class=\"col-md-12\">\n          <a [routerLink]=\"['/login']\"> Already An Admin ? Log In Here </a>\n          <br/>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n<footer-common> </footer-common>\n"
 
 /***/ }),
-/* 76 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(77));
+	__export(__webpack_require__(76));
 
 
 /***/ }),
-/* 77 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5291,7 +5224,7 @@ webpackJsonp([0],[
 	var core_1 = __webpack_require__(4);
 	var router_1 = __webpack_require__(25);
 	var interceptor_1 = __webpack_require__(64);
-	var template = __webpack_require__(78);
+	var template = __webpack_require__(77);
 	var Profile = (function () {
 	    function Profile(router, route, httpInterceptor) {
 	        this.router = router;
@@ -5358,24 +5291,24 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 78 */
+/* 77 */
 /***/ (function(module, exports) {
 
 	module.exports = ""
 
 /***/ }),
-/* 79 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(80));
+	__export(__webpack_require__(79));
 
 
 /***/ }),
-/* 80 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5391,7 +5324,7 @@ webpackJsonp([0],[
 	var core_1 = __webpack_require__(4);
 	var router_1 = __webpack_require__(25);
 	var interceptor_1 = __webpack_require__(64);
-	var template = __webpack_require__(81);
+	var template = __webpack_require__(80);
 	var Gesture = (function () {
 	    function Gesture(router, route, httpInterceptor) {
 	        this.router = router;
@@ -5414,24 +5347,24 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 81 */
+/* 80 */
 /***/ (function(module, exports) {
 
 	module.exports = ""
 
 /***/ }),
-/* 82 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(83));
+	__export(__webpack_require__(82));
 
 
 /***/ }),
-/* 83 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5447,7 +5380,7 @@ webpackJsonp([0],[
 	var core_1 = __webpack_require__(4);
 	var router_1 = __webpack_require__(25);
 	var interceptor_1 = __webpack_require__(64);
-	var template = __webpack_require__(84);
+	var template = __webpack_require__(83);
 	var Keyboard = (function () {
 	    function Keyboard(router, route, httpInterceptor) {
 	        this.router = router;
@@ -5470,24 +5403,24 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 84 */
+/* 83 */
 /***/ (function(module, exports) {
 
 	module.exports = ""
 
 /***/ }),
-/* 85 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(86));
+	__export(__webpack_require__(85));
 
 
 /***/ }),
-/* 86 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5503,7 +5436,7 @@ webpackJsonp([0],[
 	var core_1 = __webpack_require__(4);
 	var router_1 = __webpack_require__(25);
 	var interceptor_1 = __webpack_require__(64);
-	var template = __webpack_require__(87);
+	var template = __webpack_require__(86);
 	var Voice = (function () {
 	    function Voice(router, route, httpInterceptor) {
 	        this.router = router;
@@ -5518,25 +5451,6 @@ webpackJsonp([0],[
 	        this.str = '';
 	    }
 	    Voice.prototype.ngOnInit = function () {
-	        var recognition = new (window.SpeechRecognition ||
-	            window.webkitSpeechRecognition ||
-	            window.mozSpeechRecognition ||
-	            window.msSpeechRecognition)();
-	        recognition.lang = 'en-US';
-	        recognition.interimResults = false;
-	        recognition.maxAlternatives = 5;
-	        setInterval(recognition.start(), 5000);
-	        setInterval(this.checkCommand(), 5000);
-	        recognition.onresult = function (event) {
-	            if (event.results[0][0].transcript === 'bye') {
-	                console.log('stopping');
-	                recognition.stop();
-	            }
-	            else {
-	                console.log(event.results[0][0].transcript);
-	                localStorage.setItem('command', event.results[0][0].transcript);
-	            }
-	        };
 	    };
 	    Voice.prototype.checkCommand = function () {
 	        localStorage.getItem('command') === '' ||
@@ -5568,24 +5482,24 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 87 */
+/* 86 */
 /***/ (function(module, exports) {
 
 	module.exports = "\n"
 
 /***/ }),
-/* 88 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(89));
+	__export(__webpack_require__(88));
 
 
 /***/ }),
-/* 89 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5602,7 +5516,7 @@ webpackJsonp([0],[
 	var router_1 = __webpack_require__(25);
 	var interceptor_1 = __webpack_require__(64);
 	var auth_guard_1 = __webpack_require__(61);
-	var template = __webpack_require__(90);
+	var template = __webpack_require__(89);
 	var Nav = (function () {
 	    function Nav(router, httpInterceptor, authGuard) {
 	        this.router = router;
@@ -5611,6 +5525,7 @@ webpackJsonp([0],[
 	    }
 	    Nav.prototype.ngOnInit = function () {
 	        this.authObject = this.authGuard;
+	        console.log(localStorage.getItem('token'));
 	    };
 	    ;
 	    Nav.prototype.ngDestroy = function () { };
@@ -5629,24 +5544,24 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 90 */
+/* 89 */
 /***/ (function(module, exports) {
 
 	module.exports = "<nav class=\"navbar navbar-default\">\n  <div class=\"container-fluid\">\n    <div class=\"navbar-header\">\n      <button type=\"button\" class=\"navbar-toggle\">\n        <span class=\"sr-only\">Toggle navigation</span>\n        <span class=\"icon-bar bar1\"></span>\n        <span class=\"icon-bar bar2\"></span>\n        <span class=\"icon-bar bar3\"></span>\n      </button>\n    </div>\n    <div class=\"collapse navbar-collapse\">\n      <ul class=\"nav navbar-nav navbar-right\">\n        <li class=\"dropdown\">\n          <a [routerLink]=\"['/profile']\" >\n            <i class=\"ti-user\"></i> <p> Naw Ing </p>\n          </a>\n        </li>\n      </ul>\n    </div>\n  </div>\n</nav>\n"
 
 /***/ }),
-/* 91 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(92));
+	__export(__webpack_require__(91));
 
 
 /***/ }),
-/* 92 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5663,7 +5578,7 @@ webpackJsonp([0],[
 	var router_1 = __webpack_require__(25);
 	var interceptor_1 = __webpack_require__(64);
 	var auth_guard_1 = __webpack_require__(61);
-	var template = __webpack_require__(93);
+	var template = __webpack_require__(92);
 	var Header = (function () {
 	    function Header(router, httpInterceptor, authGuard) {
 	        this.router = router;
@@ -5690,24 +5605,24 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 93 */
+/* 92 */
 /***/ (function(module, exports) {
 
 	module.exports = "<div class=\"sidebar\" data-background-color=\"white\" data-active-color=\"danger\" *ngIf=\"authObject.isLoggedIn()\">\n  <div class=\"sidebar-wrapper\">\n    <div class=\"logo\">\n      <a [routerLink]=\"['/home']\" class=\"simple-text\">\n        Jarvis Drone\n      </a>\n    </div>\n\n    <ul class=\"nav\">\n      <li class=\"active\">\n        <a [routerLink]=\"['/home']\">\n          <i class=\"ti-mouse-alt\"></i>\n          <p> Manual </p>\n        </a>\n      </li>\n      <li>\n        <a [routerLink]=\"['/keyboard']\">\n          <i class=\"ti-game\"></i>\n          <p> Keyboard </p>\n        </a>\n      </li>\n      <li>\n        <a [routerLink]=\"['/voice']\">\n          <i class=\"ti-microphone\"></i>\n          <p> Voice </p>\n        </a>\n      </li>\n      <li>\n        <a [routerLink]=\"['/gesture']\">\n          <i class=\"ti-hand-open\"></i>\n          <p> Gesture </p>\n        </a>\n      </li>\n      <li>\n        <a [routerLink]=\"['/profile']\">\n          <i class=\"ti-user\"></i>\n          <p> Profile </p>\n        </a>\n      </li>\n      <li>\n        <a [routerLink]=\"['/login']\">\n          <i class=\"ti-layout-grid2-alt\"></i>\n          <p>Log Out</p>\n        </a>\n      </li>\n    </ul>\n  </div>\n</div>\n"
 
 /***/ }),
-/* 94 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(95));
+	__export(__webpack_require__(94));
 
 
 /***/ }),
-/* 95 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5723,7 +5638,7 @@ webpackJsonp([0],[
 	var core_1 = __webpack_require__(4);
 	var router_1 = __webpack_require__(25);
 	var interceptor_1 = __webpack_require__(64);
-	var template = __webpack_require__(96);
+	var template = __webpack_require__(95);
 	var Footer = (function () {
 	    function Footer(router, httpInterceptor) {
 	        this.router = router;
@@ -5747,13 +5662,13 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 96 */
+/* 95 */
 /***/ (function(module, exports) {
 
 	module.exports = "  <footer class=\"footer\">\n    <div class=\"container-fluid\">\n      <div class=\"pull-right\">\n        Jarvis Drone &copy; AI Control Panel For Parrot AR Drone, <br/> Made With <i class=\"fa fa-heart heart\"></i> by Naw Ing\n      </div>\n    </div>\n  </footer>\n"
 
 /***/ }),
-/* 97 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5768,7 +5683,7 @@ webpackJsonp([0],[
 	};
 	var core_1 = __webpack_require__(4);
 	var router_1 = __webpack_require__(25);
-	var template = __webpack_require__(98);
+	var template = __webpack_require__(97);
 	var App = (function () {
 	    function App(router) {
 	        this.router = router;
@@ -5786,23 +5701,23 @@ webpackJsonp([0],[
 
 
 /***/ }),
-/* 98 */
+/* 97 */
 /***/ (function(module, exports) {
 
 	module.exports = "<div class=\"wrapper\">\n  <header-common> </header-common>\n  <router-outlet></router-outlet>\n</div>\n"
 
 /***/ }),
-/* 99 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var home_1 = __webpack_require__(62);
-	var login_1 = __webpack_require__(70);
-	var signup_1 = __webpack_require__(73);
-	var profile_1 = __webpack_require__(76);
-	var gesture_1 = __webpack_require__(79);
-	var keyboard_1 = __webpack_require__(82);
-	var voice_1 = __webpack_require__(85);
+	var login_1 = __webpack_require__(69);
+	var signup_1 = __webpack_require__(72);
+	var profile_1 = __webpack_require__(75);
+	var gesture_1 = __webpack_require__(78);
+	var keyboard_1 = __webpack_require__(81);
+	var voice_1 = __webpack_require__(84);
 	exports.routes = [
 	    { path: 'login', component: login_1.Login },
 	    { path: 'signup', component: signup_1.Signup },

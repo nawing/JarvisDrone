@@ -9,6 +9,7 @@ var mongoose  = require('mongoose');
 var passport  = require('passport');
 var flash     = require('connect-flash');
 var path      = require('path');
+var cors      = require('cors');
 
 var morgan        = require('morgan');
 var cookieParser  = require('cookie-parser');
@@ -35,9 +36,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'app/views'));
 app.set('view engine', 'ejs');
-require('./config/routes.js')(app, passport);
 
+// app.use(cors);
+require('./config/routes.js')(app, passport);
 app.set('port', port);
+
 var server  = http.createServer(app);
 var io      = socket(server);
 server.listen(port);

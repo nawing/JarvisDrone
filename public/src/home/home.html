@@ -1,0 +1,214 @@
+<div class="main-panel">
+
+  <nav-common> </nav-common>
+
+  <div class="content">
+    <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-lg-3 col-sm-6">
+          <div class="card">
+            <div class="content">
+              <div class="row">
+                <div class="col-xs-5">
+                  <div class="icon-big icon-warning text-center"> <i class="ti-rocket"></i> </div>
+                </div>
+                <div class="col-xs-7">
+                  <div class="numbers"> <p> Take Off </p> </div>
+                </div>
+              </div>
+              <div class="footer">
+                <hr />
+                <div class="stats">
+                  <p> Press </p>
+                  <button (click)="controlSubmit('takeOff')" class="btn btn-danger"> <i class="ti-control-record"></i> </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-sm-6">
+          <div class="card">
+            <div class="content">
+              <div class="row">
+                <div class="col-xs-5">
+                  <div class="icon-big icon-success text-center"> <i class="ti-magnet"></i> </div>
+                </div>
+                <div class="col-xs-7">
+                  <div class="numbers"> <p> Land </p> </div>
+                </div>
+              </div>
+              <div class="footer">
+                <hr />
+                <div class="stats">
+                  <p> Press </p>
+                  <button (click)="controlSubmit('land')" class="btn btn-primary"> <i class="ti-control-record"></i> </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-lg-3 col-sm-6">
+          <div class="card">
+            <div class="content">
+              <div class="row">
+                <div class="col-xs-5">
+                  <div class="icon-big icon-danger text-center"> <i class="ti-angle-double-right"></i> </div>
+                </div>
+                <div class="col-xs-7">
+                  <div class="numbers"> <p> Rotate Right </p> </div>
+                </div>
+              </div>
+              <div class="footer">
+                <hr />
+                <div class="stats">
+                  <p> Press </p>
+                  <button (click)="controlSubmit('right')" class="btn btn-info"> <i class="ti-control-record"></i> </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-lg-3 col-sm-6">
+          <div class="card">
+            <div class="content">
+              <div class="row">
+                <div class="col-xs-5">
+                  <div class="icon-big icon-primary text-center"> <i class="ti-angle-double-left"></i> </div>
+                </div>
+                <div class="col-xs-7">
+                  <div class="numbers"> <p> Rotate Left </p> </div>
+                </div>
+              </div>
+              <div class="footer">
+                <hr />
+                <div class="stats">
+                  <p> Press </p>
+                  <button (click)="controlSubmit('left')" class="btn btn-success"> <i class="ti-control-record"></i> </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-sm-6">
+          <div class="card">
+            <div class="content">
+              <div class="row">
+                <div class="col-xs-5">
+                  <div class="icon-big icon-info text-center"> <i class="ti-angle-double-up"></i> </div>
+                </div>
+                <div class="col-xs-7">
+                  <div class="numbers"> <p> Move Forward </p> </div>
+                </div>
+              </div>
+              <div class="footer">
+                <hr />
+                <div class="stats">
+                  <p> Press </p>
+                  <button (click)="controlSubmit('forward')" class="btn btn-default"> <i class="ti-control-record"></i> </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-sm-6">
+          <div class="card">
+            <div class="content">
+              <div class="row">
+                <div class="col-xs-5">
+                  <div class="icon-big icon-danger text-center"> <i class="ti-angle-double-down"></i> </div>
+                </div>
+                <div class="col-xs-7">
+                  <div class="numbers"> <p> Move Backward </p> </div>
+                </div>
+              </div>
+              <div class="footer">
+                <hr />
+                <div class="stats">
+                  <p> Press </p>
+                  <button (click)="controlSubmit('backward')" class="btn btn-info"> <i class="ti-control-record"></i> </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-sm-6">
+          <div class="card">
+            <div class="content">
+              <div class="row">
+                <div class="col-xs-5">
+                  <div class="icon-big icon-warning text-center"> <i class="ti-angle-up"></i> </div>
+                </div>
+                <div class="col-xs-7">
+                  <div class="numbers"> <p> Fly Up </p> </div>
+                </div>
+              </div>
+              <div class="footer">
+                <hr />
+                <div class="stats">
+                  <p> Press </p>
+                  <button (click)="controlSubmit('flyUp')" class="btn btn-success"> <i class="ti-control-record"></i> </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-sm-6">
+          <div class="card">
+            <div class="content">
+              <div class="row">
+                <div class="col-xs-5">
+                  <div class="icon-big icon-success text-center"> <i class="ti-angle-down"></i> </div>
+                </div>
+                <div class="col-xs-7">
+                  <div class="numbers"> <p> Fly Down </p> </div>
+                </div>
+              </div>
+              <div class="footer">
+                <hr />
+                <div class="stats">
+                  <p> Press </p>
+                  <button (click)="controlSubmit('flyDown')" class="btn btn-info"> <i class="ti-control-record"></i> </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-sm-6">
+          <div class="card">
+            <div class="content">
+              <div class="row">
+                <div class="col-xs-5">
+                  <div class="icon-big icon-default text-center"> <i class="ti-wheelchair"></i> </div>
+                </div>
+                <div class="col-xs-7">
+                  <div class="numbers"> <p> Hold Position </p> </div>
+                </div>
+              </div>
+              <div class="footer">
+                <hr />
+                <div class="stats">
+                  <p> Press </p>
+                  <button (click)="controlSubmit('hold')" class="btn btn-warning"> <i class="ti-control-record"></i> </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+  <footer-common> </footer-common>
+</div>
