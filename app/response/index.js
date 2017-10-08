@@ -40,4 +40,10 @@ module.exports = {
 
   HOLDSUCCESS       : { status : "success", message : "Holding Position Sir" },
   HOLDFAIL          : { status : "fail",    message : "Cannot Hold Positions Sir" },
+
+  STREAMVIDEOSUCCESS : { status : "success", message : "Streaming Your Video Sir" },
+  STREAMVIDEOFAIL   : { status : "fail",     message : "Cannot Capture Your Video Sir" },
+
+  TAKEPHOTOSUCCESS  : { status : "success", message : "Took Your Photo Sir" },
+  TAKEPHOTOFAIL     : { status : "fail",    message : "Cannot Capture Your Photo Sir" }
 }

@@ -1,5 +1,6 @@
 var user            = require('../app/controllers/user');
 var manuals         = require('../app/controllers/manuals');
+var photo           = require('../app/controllers/photo');
 
 var mongo = require('mongodb');
 
@@ -22,5 +23,9 @@ module.exports = function (app, passport) {
   app.post('/api/flyUp',    function(req, res) { manuals.flyUp(req, res); });
   app.post('/api/flyDown',  function(req, res) { manuals.flyDown(req, res); });
   app.post('/api/hold',     function(req, res) { manuals.hold(req, res); });
+
+
+  app.post('/api/photo',    function(req, res) { photo.takePhoto(req, res); });
+  app.post('/api/video',    function(req, res) { photo.stream(req, res); });
 
 }

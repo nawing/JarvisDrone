@@ -22,6 +22,7 @@
     "express-mailer": "^0.3.0",
     "express-session": "latest",
     "fs-extra": "latest",
+    "hls.js": "^0.8.4",
     "http": "latest",
     "http-proxy": "latest",
     "md5": "latest",
@@ -46,7 +47,8 @@
     "simple-encryptor": "latest",
     "socket.io": "latest",
     "sync": "latest",
-    "underscore": "latest"
+    "underscore": "latest",
+    "videojs-contrib-hls": "^5.11.0"
   },
   "devDependencies": {
     "utest": "0.0.6",
