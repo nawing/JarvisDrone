@@ -16,15 +16,13 @@ export class Voice implements OnInit {
 
   ngOnInit() {
 		var ajax = this.httpInterceptor;
-		var recognition = new ( window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+		var recognition = new ( window['SpeechRecognition'] || window['webkitSpeechRecognition'] || window['mozSpeechRecognition'] || window['msSpeechRecognition'])();
 		recognition.lang = 'en-US';
 		recognition.interimResults = false;
 		recognition.maxAlternatives = 5;
 		recognition.start();
 
-		recognition.onstart = function() {
-			$("#message").text('Say Something');
-		};
+		recognition.onstart = function() { $("#message").text('Say Something'); };
 
 		recognition.onsoundstart = function() {
 			$("#message").text('Listening');
@@ -32,9 +30,7 @@ export class Voice implements OnInit {
 
 		recognition.onsoundend = function() {
 			recognition.stop();
-			setTimeout(function() {
-				recognition.start();
-			}, 1000);
+			setTimeout(function() { recognition.start() }, 1000);
 		}
 
 		recognition.onend = function() {
@@ -42,6 +38,7 @@ export class Voice implements OnInit {
 		}
 
 		recognition.onresult = function (event) {
+			console.log(event.results[0][0].transcript)
 			$("#message").text('Got It! Sir. You Said '+ event.results[0][0].transcript);
 			if (event.results[0][0].transcript === 'bye') {
 				$("#message").text('Bye Bye ^^');
@@ -100,20 +97,15 @@ export class Voice implements OnInit {
 				url : status,
 				body : body
 			};
-			ajax.callApiPost(Api.url, Api.body)
-				.subscribe(
-					res => {
-
-					},
-					err => {
-
-					});
-				}
+			ajax.callApiPost(Api.url, Api.body).subscribe(
+				res => console.log(res),
+				err => console.log(err));
+			}
 	}
 
 
 	restartSpeech() {
-		var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+		var recognition = new (window['SpeechRecognition'] || window['webkitSpeechRecognition'] || window['mozSpeechRecognition'] || window['msSpeechRecognition'])();
 		recognition.lang = 'en-US';
 		recognition.interimResults = false;
 		recognition.maxAlternatives = 5;

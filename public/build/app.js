@@ -5444,27 +5444,24 @@ webpackJsonp([0],[
 	    }
 	    Voice.prototype.ngOnInit = function () {
 	        var ajax = this.httpInterceptor;
-	        var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+	        var recognition = new (window['SpeechRecognition'] || window['webkitSpeechRecognition'] || window['mozSpeechRecognition'] || window['msSpeechRecognition'])();
 	        recognition.lang = 'en-US';
 	        recognition.interimResults = false;
 	        recognition.maxAlternatives = 5;
 	        recognition.start();
-	        recognition.onstart = function () {
-	            $("#message").text('Say Something');
-	        };
+	        recognition.onstart = function () { $("#message").text('Say Something'); };
 	        recognition.onsoundstart = function () {
 	            $("#message").text('Listening');
 	        };
 	        recognition.onsoundend = function () {
 	            recognition.stop();
-	            setTimeout(function () {
-	                recognition.start();
-	            }, 1000);
+	            setTimeout(function () { recognition.start(); }, 1000);
 	        };
 	        recognition.onend = function () {
 	            $("#message").text('Sleeping, Press The Button To Wake Me Up');
 	        };
 	        recognition.onresult = function (event) {
+	            console.log(event.results[0][0].transcript);
 	            $("#message").text('Got It! Sir. You Said ' + event.results[0][0].transcript);
 	            if (event.results[0][0].transcript === 'bye') {
 	                $("#message").text('Bye Bye ^^');
@@ -5529,14 +5526,11 @@ webpackJsonp([0],[
 	                url: status,
 	                body: body
 	            };
-	            ajax.callApiPost(Api.url, Api.body)
-	                .subscribe(function (res) {
-	            }, function (err) {
-	            });
+	            ajax.callApiPost(Api.url, Api.body).subscribe(function (res) { return console.log(res); }, function (err) { return console.log(err); });
 	        }
 	    };
 	    Voice.prototype.restartSpeech = function () {
-	        var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+	        var recognition = new (window['SpeechRecognition'] || window['webkitSpeechRecognition'] || window['mozSpeechRecognition'] || window['msSpeechRecognition'])();
 	        recognition.lang = 'en-US';
 	        recognition.interimResults = false;
 	        recognition.maxAlternatives = 5;
@@ -5560,7 +5554,7 @@ webpackJsonp([0],[
 /* 86 */
 /***/ (function(module, exports) {
 
-	module.exports = "\n<div class=\"main-panel\">\n  <nav-common> </nav-common>\n  <br/> <br/>\n  <div class=\"col-md-4 col-md-offset-4\">\n    <div class=\"card card-user\">\n      <div class=\"content\">\n        <div class=\"row\">\n          <div class=\"col-md-12 text-center\"> <h3> Ready Sir </h3> </div>\n        </div>\n        <div class=\"row\">\n          <div class=\"col-md-12\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"icon-big icon-warning text-center\">\n                  <i class=\"ti-microphone\"></i>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p id=\"message\"> </p>\n                  <button (click)=\"restartSpeech()\" class=\"btn btn-danger\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
+	module.exports = "\n<div class=\"main-panel\">\n  <nav-common> </nav-common>\n  <br/> <br/>\n  <div class=\"col-md-4 col-md-offset-4\">\n    <div class=\"card card-user\">\n      <div class=\"content\">\n        <div class=\"row\">\n          <div class=\"col-md-12 text-center\"> <h3> Ready Sir </h3> </div>\n        </div>\n        <div class=\"row\">\n          <div class=\"col-md-12\">\n            <div class=\"content\">\n              <div class=\"row\">\n                <div class=\"icon-big icon-info text-center\">\n                  <i class=\"ti-microphone\"></i>\n                </div>\n              </div>\n              <div class=\"footer\">\n                <hr />\n                <div class=\"stats\">\n                  <p id=\"message\"> </p>\n                  <button (click)=\"restartSpeech()\" class=\"btn btn-danger\"> <i class=\"ti-control-record\"></i> </button>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 /* 87 */

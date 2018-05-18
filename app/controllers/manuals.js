@@ -16,6 +16,7 @@ exports.takeOff = function(req, res)
   } catch (e) {
     res.json(Response.TAKEOFFFAIL);
   } finally {
+    res.json(Response.TAKEOFFFAIL);
   }
 }
 
