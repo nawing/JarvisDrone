@@ -89,10 +89,10 @@ exports.backward = function (req, res)
 {
   try {
     client.after(1, function() {
-        this.front(0.7);
+        this.back(0.7);
       })
       .after(10, function() {
-        this.back();
+        this.stop();
       });
     res.json(Response.BACKWARDSUCCESS);
   } catch (e) {
@@ -109,7 +109,7 @@ exports.flyUp = function (req, res)
         this.up(0.7);
       })
       .after(10, function() {
-        this.back();
+        this.stop();
       });
     res.json(Response.FLYUPSUCCESS);
   } catch (e) {
@@ -126,7 +126,7 @@ exports.flyDown = function (req, res)
         this.down(0.7);
       })
       .after(10, function() {
-        this.back();
+        this.stop();
       });
     res.json(Response.FLYDOWNSUCCESS);
   } catch (e) {

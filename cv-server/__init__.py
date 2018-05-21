@@ -2,8 +2,8 @@ import cv2
 
 face_cascade = cv2.CascadeClassifier('./classifiers/haarcascade_frontalface_default.xml')
 eye_cascade = cv2.CascadeClassifier('./classifiers/haarcascade_eye.xml')
-# cam = cv2.VideoCapture('tcp://192.168.1.1:5555')
-cam = cv2.VideoCapture(0)
+cam = cv2.VideoCapture('tcp://192.168.1.1:5555')
+# cam = cv2.VideoCapture(0)
 running = True
 while running:
     # get current frame of video

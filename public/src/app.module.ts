@@ -3,6 +3,7 @@ import { RouterModule }   from '@angular/router';
 import { HttpModule }     from '@angular/http';
 import { FormsModule }    from '@angular/forms';
 import { NgModule }       from '@angular/core';
+import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 
 import { AUTH_PROVIDERS } from 'angular2-jwt';
 
@@ -20,8 +21,9 @@ import { Header }         from './common/header';
 import { Footer }         from './common/footer';
 import { App }            from './app';
 
-import { routes } from './app.routes';
+import { routes }         from './app.routes';
 
+const config: SocketIoConfig = { url: 'http://localhost:8042', options: {} };
 @NgModule({
   bootstrap: [App],
   declarations: [
@@ -31,9 +33,8 @@ import { routes } from './app.routes';
   ],
   imports: [
     HttpModule, BrowserModule, FormsModule,
-    RouterModule.forRoot(routes, {
-      useHash: true
-    })
+    SocketIoModule.forRoot(config),
+    RouterModule.forRoot(routes, { useHash: true })
   ],
   providers: [
     AuthGuard, ...AUTH_PROVIDERS

@@ -12,7 +12,7 @@ module.exports = function(passport) {
       if (!user)  return done(null, false, Response.TOKENFAIL);
       if (user)   return done(null, user, { scope: 'read' });
     });
-    
+
   }));
 
 };

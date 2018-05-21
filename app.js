@@ -22,10 +22,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 /***************Mongodb configuratrion********************/
-var mongoose = require('mongoose');
-var configDB = require('./config/database.js');
-mongoose.connect(configDB.url);
-require('./config/passport')(passport);
+// var mongoose = require('mongoose');
+// var configDB = require('./config/database.js');
+// mongoose.connect(configDB.url);
+// require('./config/passport')(passport);
 
 app.use(morgan('dev'));
 app.use(cookieParser());
@@ -34,11 +34,57 @@ app.set('views', path.join(__dirname, 'app/views'));
 app.set('view engine', 'ejs');
 
 // app.use(cors);
-require('./config/routes.js')(app, passport);
+// require('./config/routes.js')(app, passport);
 app.set('port', port);
 
 var server  = http.createServer(app);
 var io      = socket(server);
+
+io.on('connection', (socket) => {
+  socket.on('manuals', (req) => {
+    const arDrone = require('./app/index');
+    const client  = arDrone.createClient();
+    console.log(req.key)
+    switch (req.key) {
+      case 'takeOff':
+        client.after(1,   function() { this.takeoff() })
+              .after(100, function() { this.stop() });
+        break;
+      case 'land' :
+        client.after(1,   function() { this.stop() })
+              .after(100, function() { this.land() });
+        break;
+      case 'right' :
+        client.after(1,   function() { this.clockwise(0.8) })
+              .after(50,  function() { this.stop() });
+        break;
+      case 'left' :
+        client.after(1,   function() { this.clockwise(-0.8) })
+              .after(50,  function() { this.stop() });
+        break;
+      case 'forward' :
+        client.after(1,   function() { this.front(0.8) })
+              .after(50,  function() { this.stop() });
+        break;
+      case 'backward' :
+        client.after(1,   function() { this.back(0.8) })
+              .after(50,  function() { this.stop() });
+        break;
+      case 'flyUp' :
+        client.after(1,   function() { this.up(0.8) })
+              .after(50,  function() { this.stop() });
+        break;
+      case 'flyDown' :
+        client.after(1,   function() { this.down(0.8) })
+              .after(50,  function() { this.stop() });
+        break;
+      case 'hold' :
+        client.stop();
+        break;
+    }
+  });
+});
+
 server.listen(port);
 
 console.log('The magic happens on port ' + port);
