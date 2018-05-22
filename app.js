@@ -17,7 +17,8 @@ var bodyParser    = require('body-parser');
 var dateFormat    = require('dateformat');
 var http          = require('http');
 var socket        = require("socket.io");
-
+const arDrone     = require('./app/index');
+const client      = arDrone.createClient();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
@@ -35,6 +36,7 @@ app.set('view engine', 'ejs');
 
 // app.use(cors);
 // require('./config/routes.js')(app, passport);
+
 app.set('port', port);
 
 var server  = http.createServer(app);
@@ -42,9 +44,7 @@ var io      = socket(server);
 
 io.on('connection', (socket) => {
   socket.on('manuals', (req) => {
-    const arDrone = require('./app/index');
-    const client  = arDrone.createClient();
-    console.log(req.key)
+    console.log(req)
     switch (req.key) {
       case 'takeOff':
         client.after(1,   function() { this.takeoff() })
